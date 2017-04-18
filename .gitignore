@@ -17,9 +17,12 @@ gen/
 out/
 
 # Gradle files
-.gradle
-.gradle/
+.gradle/*
+gradle
 build/
+gradlew
+gradlew.bat
+gradle.properties
 
 # Signing files
 .signing/

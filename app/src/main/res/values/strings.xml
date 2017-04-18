@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IGotThis</string>
+    <string name="task_creation">Create Tasks</string>
+    <string name="pre_deploy">Pre-Deploy</string>
+    <string name="active_tasks">Active Tasks</string>
+    <string name="task_creation_button_add">ADD</string>
+    <string name="task_creation_button_reset">RESET</string>
+</resources>

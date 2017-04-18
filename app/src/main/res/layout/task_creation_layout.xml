@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/task_creation_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/event_drop_down_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/event_drop_down_list"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.DropDownListView
+        android:id="@+id/event_drop_down_list"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/action_drop_down_list"
+        android:layout_below="@id/event_drop_down_list"/>
+
+    <android.support.v7.widget.DropDownListView
+        android:id="@+id/action_drop_down_list"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/event_drop_down_list"
+        android:layout_alignStart="@+id/event_drop_down_list"
+        android:layout_marginTop="92dp" />
+
+    <Button
+        android:id="@+id/button_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/action_drop_down_list"
+        android:layout_marginBottom="27dp"
+        android:text="@string/task_creation_button_reset" />
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/action_drop_down_list"
+        android:layout_alignTop="@+id/button_reset"
+        android:text="@string/task_creation_button_add" />
+
+</RelativeLayout>
