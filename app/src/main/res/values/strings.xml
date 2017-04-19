@@ -5,4 +5,6 @@
     <string name="active_tasks">Active Tasks</string>
     <string name="task_creation_button_add">ADD</string>
     <string name="task_creation_button_reset">RESET</string>
+    <string name="task_creation_on_event">On Event</string>
+    <string name="task_creation_do_action">Do Action</string>
 </resources>
