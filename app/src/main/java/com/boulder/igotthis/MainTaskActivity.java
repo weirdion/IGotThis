@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class MainTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_task);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         menuContentLayout = (FrameLayout) findViewById(R.id.menu_content_layout);
         navigation = (BottomNavigationView) findViewById(R.id.navigation_bar);
@@ -38,6 +40,7 @@ public class MainTaskActivity extends AppCompatActivity {
     private void init() {
         taskCreation = new TaskCreation(getApplicationContext());
         addListeners();
+        navigation.setSelectedItemId(R.id.task_creation_menu);
     }
 
     private void addListeners() {
