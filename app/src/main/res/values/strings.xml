@@ -1,10 +1,24 @@
 <resources>
     <string name="app_name">IGotThis</string>
+
+    <!-- Task Creation tab -->
     <string name="task_creation">Create Tasks</string>
-    <string name="pre_deploy">Pre-Deploy</string>
-    <string name="active_tasks">Active Tasks</string>
     <string name="task_creation_button_add">ADD</string>
     <string name="task_creation_button_reset">RESET</string>
     <string name="task_creation_on_event">On Event</string>
     <string name="task_creation_do_action">Do Action</string>
+    <!-- EventType -->
+    <string name="event_type_default">Select</string>
+    <string name="event_type_bluetooth_connected">Bluetooth Connected</string>
+    <string name="event_type_bluetooth_disconnected">Bluetooth Disconnected</string>
+    <string name="event_type_wifi_connected">Wi-Fi Connected</string>
+    <string name="event_type_wifi_disconnected">Wi-Fi Disconnected</string>
+    <string name="event_type_charging_connected">Charging Connected</string>
+    <string name="event_type_charging_disconnected">Charging Disconnected</string>
+
+    <!-- Pre-Deploy tab -->
+    <string name="pre_deploy">Pre-Deploy</string>
+
+    <!-- Active Tasks tab -->
+    <string name="active_tasks">Active Tasks</string>
 </resources>
