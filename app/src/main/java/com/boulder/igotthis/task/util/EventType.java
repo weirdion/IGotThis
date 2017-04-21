@@ -1,13 +1,16 @@
 package com.boulder.igotthis.task.util;
 
+import com.boulder.igotthis.R;
+
 /**
  * Class Description
  *
- * @author ankit
+ * @author asadana
  * @since 04/18/2017
  */
 
 public enum EventType {
+    NONE,
     BLUETOOTH_CONNECTED,
     BLUETOOTH_DISCONNECTED,
     CHARGING_CONNECTED,
@@ -15,22 +18,29 @@ public enum EventType {
     WIFI_CONNECTED,
     WIFI_DISCONNECTED;
 
-    public int getString (EventType eventType) {
+    public static int getStringResource(EventType eventType) {
         switch (eventType) {
             case BLUETOOTH_CONNECTED:
-                return 0;
+                return R.string.event_type_bluetooth_connected;
             case BLUETOOTH_DISCONNECTED:
-                return 0;
+                return R.string.event_type_bluetooth_disconnected;
             case CHARGING_CONNECTED:
-                return 0;
+                return R.string.event_type_charging_connected;
             case CHARGING_DISCONNECTED:
-                return 0;
+                return R.string.event_type_charging_disconnected;
             case WIFI_CONNECTED:
-                return 0;
+                return R.string.event_type_wifi_connected;
             case WIFI_DISCONNECTED:
-                return 0;
+                return R.string.event_type_wifi_disconnected;
             default:
-                return 0;
+                return R.string.event_type_default;
         }
+    }
+
+    public static EventType valueAt(int position) {
+        if (position < EventType.values().length) {
+            return EventType.values()[position];
+        }
+        return EventType.NONE;
     }
 }
