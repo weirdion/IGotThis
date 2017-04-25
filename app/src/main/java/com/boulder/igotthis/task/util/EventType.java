@@ -3,7 +3,7 @@ package com.boulder.igotthis.task.util;
 import com.boulder.igotthis.R;
 
 /**
- * Class Description
+ * EventType is a enum class that holds all the events that might happen.
  *
  * @author asadana
  * @since 04/18/2017
@@ -18,6 +18,12 @@ public enum EventType {
     WIFI_CONNECTED,
     WIFI_DISCONNECTED;
 
+    /**
+     * Method to fetch the String resource for the corresponding enum.
+     *
+     * @param eventType Contains the enum value for the resource.
+     * @return the resource for the string.
+     */
     public static int getStringResource(EventType eventType) {
         switch (eventType) {
             case BLUETOOTH_CONNECTED:
@@ -37,6 +43,13 @@ public enum EventType {
         }
     }
 
+    /**
+     * Method to get the enum at a particular position.
+     * This is primarily used to check which of the list element was chosen by the user.
+     *
+     * @param position Contains the position chosen from the list of enums.
+     * @return the corresponding enum.
+     */
     public static EventType valueAt(int position) {
         if (position < EventType.values().length) {
             return EventType.values()[position];

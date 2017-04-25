@@ -1,8 +1,6 @@
 package com.boulder.igotthis.task;
 
 import android.content.Context;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +15,7 @@ import com.boulder.igotthis.task.util.EventType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class Description
@@ -31,6 +30,7 @@ public class TaskCreation extends LinearLayout {
 
     private Spinner eventDropDownSpinner;
     private LinearLayout itemActionLayout;
+    //private Map<EventType, Map<, Integer>> processMap;
 
     public TaskCreation(Context context) {
         this(context, null);
@@ -72,27 +72,17 @@ public class TaskCreation extends LinearLayout {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (EventType.valueAt(position)) {
                     case BLUETOOTH_CONNECTED:
-                        break;
                     case BLUETOOTH_DISCONNECTED:
-                        break;
-                    case CHARGING_CONNECTED:
-                        break;
-                    case CHARGING_DISCONNECTED:
-                        break;
                     case WIFI_CONNECTED:
-                        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                        if (wifiManager.isWifiEnabled()) {
-                            StringBuilder stringBuilder = new StringBuilder("");
-                            for (WifiConfiguration wifiConfiguration : wifiManager.getConfiguredNetworks()) {
-                                stringBuilder.append(wifiConfiguration.SSID);
-                                stringBuilder.append("\n");
-                            }
-                            Toast.makeText(context, "WIFI Enabled\n" + stringBuilder.toString(), Toast.LENGTH_LONG).show();
-                        }
-                        break;
                     case WIFI_DISCONNECTED:
+                        // TODO display popup/radio buttons to choose one or more/all configured networks
+                        // put them in a map against actionMap items, before sending them for Asynctask creationg.
                         break;
+                    // TODO temporarily do nothing for charging connected/disconnected.
+                    case CHARGING_CONNECTED:
+                    case CHARGING_DISCONNECTED:
                     default:
+                        break;
                 }
             }
 
