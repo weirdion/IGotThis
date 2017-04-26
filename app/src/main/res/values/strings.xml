@@ -21,4 +21,5 @@
 
     <!-- Active Tasks tab -->
     <string name="active_tasks">Active Tasks</string>
+    <string name="action_type_default">Select</string>
 </resources>

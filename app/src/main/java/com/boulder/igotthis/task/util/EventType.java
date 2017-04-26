@@ -56,4 +56,18 @@ public enum EventType {
         }
         return EventType.NONE;
     }
+
+    /**
+     * Method to get the position of the EventType passed.
+     *
+     * @param eventType Contains the EventType enum object being queried.
+     * @return the corresponding position, -1 if not found.
+     */
+    public static int getPositionOf(EventType eventType) {
+        for (int position = 0; position < EventType.values().length; position++) {
+            if (eventType.equals(EventType.values()[position]))
+                return position;
+        }
+        return -1;
+    }
 }
