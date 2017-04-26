@@ -15,11 +15,19 @@
     <string name="event_type_wifi_disconnected">Wi-Fi Disconnected</string>
     <string name="event_type_charging_connected">Charging Connected</string>
     <string name="event_type_charging_disconnected">Charging Disconnected</string>
+    <!-- ActionType -->
+    <string name="action_type_default">Select</string>
+    <string name="action_type_bluetooth_turn_on">Turn Bluetooth On</string>
+    <string name="action_type_bluetooth_turn_off">Turn Bluetooth Off</string>
+    <string name="action_type_wifi_turn_on">Turn Wi-Fi On</string>
+    <string name="action_type_wifi_turn_off">Turn Wi-Fi Off</string>
+    <string name="action_type_open_app">Open App</string>
+    <string name="action_type_send_message_allo">Message with Allo</string>
+    <string name="action_type_perform_custom_action">Perform Custom Action</string>
 
     <!-- Pre-Deploy tab -->
     <string name="pre_deploy">Pre-Deploy</string>
 
     <!-- Active Tasks tab -->
     <string name="active_tasks">Active Tasks</string>
-    <string name="action_type_default">Select</string>
 </resources>

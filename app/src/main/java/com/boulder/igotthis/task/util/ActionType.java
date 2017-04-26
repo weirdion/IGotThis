@@ -30,19 +30,19 @@ public enum ActionType {
     public static int getStringResource(ActionType actionType) {
         switch (actionType) {
             case TURN_BLUETOOTH_ON:
-                return 0;
+                return R.string.action_type_bluetooth_turn_on;
             case TURN_BLUETOOTH_OFF:
-                return 0;
+                return R.string.action_type_bluetooth_turn_off;
             case TURN_WIFI_ON:
-                return 0;
+                return R.string.action_type_wifi_turn_on;
             case TURN_WIFI_OFF:
-                return 0;
+                return R.string.action_type_wifi_turn_off;
             case OPEN_APP:
-                return 0;
+                return R.string.action_type_open_app;
             case SEND_MESSAGE_USING_ALLO:
-                return 0;
+                return R.string.action_type_send_message_allo;
             case PERFORM_CUSTOM_ACTION:
-                return 0;
+                return R.string.action_type_perform_custom_action;
             default:
                 return R.string.action_type_default;
         }
