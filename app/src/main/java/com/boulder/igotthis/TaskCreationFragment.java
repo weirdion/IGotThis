@@ -1,31 +1,30 @@
-package com.boulder.igotthis.task;
+package com.boulder.igotthis;
 
+import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.util.AttributeSet;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.boulder.igotthis.R;
 import com.boulder.igotthis.task.util.ActionType;
 import com.boulder.igotthis.task.util.EventType;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -38,13 +37,14 @@ import static android.content.ContentValues.TAG;
 /**
  * Class Description
  *
- * @author asadana
- * @since 04/17/2017
+ * @author ankit
+ * @since 05/02/2017
  */
 
-public class TaskCreation extends LinearLayout {
+public class TaskCreationFragment extends Fragment {
 
-    private final Context context;
+    private View rootView;
+    private Context context;
 
     // Event Elements
     private Spinner eventDropDownSpinner;
@@ -53,29 +53,19 @@ public class TaskCreation extends LinearLayout {
     private Spinner actionDropDownSpinner;
     private ImageButton addActionButton;
 
-    public TaskCreation(Context context) {
-        this(context, null);
+    public TaskCreationFragment() {
+        super();
     }
 
-    public TaskCreation(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public TaskCreation(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public TaskCreation(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        this.context = context;
-        init();
-    }
-
-    private void init() {
-        addView(inflate(context, R.layout.task_creation_layout, null));
-        eventDropDownSpinner = (Spinner) findViewById(R.id.event_drop_down_list);
-        itemActionLayout = (LinearLayout) findViewById(R.id.item_action_select_layout);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.task_creation_layout, container, false);
+        context = rootView.getContext();
+        eventDropDownSpinner = (Spinner) rootView.findViewById(R.id.event_drop_down_list);
+        itemActionLayout = (LinearLayout) rootView.findViewById(R.id.item_action_select_layout);
         populateEventSpinner();
+        return rootView;
     }
 
     private void populateEventSpinner() {
@@ -171,21 +161,21 @@ public class TaskCreation extends LinearLayout {
 
                             @Override
                             protected String doInBackground(String... params) {
+                                String urlString = "http://www.google.com";
 
                                 String resultToDisplay = "";
                                 HttpURLConnection httpURLConnection = null;
 
                                 try {
 
-                                    URL url = new URL("http:///www.google.com");
-                                    Log.e(TAG, "doInBackground: " + String.format(urlString, email, token, command));
+                                    URL url = new URL(urlString);
 
                                     httpURLConnection = (HttpURLConnection) url.openConnection();
                                     httpURLConnection.setReadTimeout(15000);
                                     httpURLConnection.setConnectTimeout(15000);
                                     httpURLConnection.setRequestMethod("GET");
                                     httpURLConnection.setDoInput(true);
-                                    httpURLConnection.setDoOutput(true);
+                                    //httpURLConnection.setDoOutput(true);
 /*
 
                                     OutputStream os = httpURLConnection.getOutputStream();
@@ -199,23 +189,24 @@ public class TaskCreation extends LinearLayout {
 */
 
                                     int responseCode = httpURLConnection.getResponseCode();
+                                    Log.e(TAG, "doInBackground: " + responseCode);
 
                                     //if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                                        BufferedReader bufferedReader = new BufferedReader(
-                                                new InputStreamReader(
-                                                        httpURLConnection.getInputStream()));
-                                        StringBuilder stringBuilder = new StringBuilder("");
-                                        String line = "";
+                                    BufferedReader bufferedReader = new BufferedReader(
+                                            new InputStreamReader(
+                                                    httpURLConnection.getInputStream()));
+                                    StringBuilder stringBuilder = new StringBuilder("");
+                                    String line = "";
 
-                                        while ((line = bufferedReader.readLine()) != null) {
+                                    while ((line = bufferedReader.readLine()) != null) {
 
-                                            stringBuilder.append(line);
-                                            break;
-                                        }
+                                        stringBuilder.append(line);
+                                        break;
+                                    }
 
-                                        bufferedReader.close();
-                                        resultToDisplay = stringBuilder.toString();
+                                    bufferedReader.close();
+                                    resultToDisplay = stringBuilder.toString();
 
                                     /*} else {
                                         resultToDisplay = "false : " + responseCode;
@@ -255,5 +246,15 @@ public class TaskCreation extends LinearLayout {
                 Toast.makeText(context, "Nothing selected", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

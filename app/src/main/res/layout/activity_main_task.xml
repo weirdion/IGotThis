@@ -9,11 +9,10 @@
     tools:context="com.boulder.igotthis.MainTaskActivity">
 
     <FrameLayout
-        android:id="@+id/menu_content_layout"
+        android:id="@+id/main_task_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
-
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -23,11 +22,4 @@
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
-
-
-    <com.boulder.igotthis.task.TaskCreation
-        android:id="@+id/task_creation_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
 </LinearLayout>

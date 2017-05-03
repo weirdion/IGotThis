@@ -1,16 +1,14 @@
 package com.boulder.igotthis;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
-import com.boulder.igotthis.task.TaskCreation;
 
 /**
  * MainTaskActivity
@@ -20,38 +18,43 @@ import com.boulder.igotthis.task.TaskCreation;
  */
 public class MainTaskActivity extends AppCompatActivity {
 
-    private FrameLayout menuContentLayout;
+    private FrameLayout mainTaskFragmentLayout;
     private BottomNavigationView navigation;
 
-    private TaskCreation taskCreation;
+    private TaskCreationFragment taskCreationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_task);
+        // TODO: remove this flag after initial testing
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        menuContentLayout = (FrameLayout) findViewById(R.id.menu_content_layout);
+        mainTaskFragmentLayout = (FrameLayout) findViewById(R.id.main_task_fragment);
         navigation = (BottomNavigationView) findViewById(R.id.navigation_bar);
-
+        if (savedInstanceState == null) {
+            taskCreationFragment = new TaskCreationFragment();
+            taskCreationFragment.setArguments(getIntent().getExtras());
+        }
         init();
     }
 
     private void init() {
-        taskCreation = new TaskCreation(getApplicationContext());
+        getFragmentManager().beginTransaction().add(R.id.main_task_fragment, taskCreationFragment).commit();
         addListeners();
-        navigation.setSelectedItemId(R.id.task_creation_menu);
     }
 
     private void addListeners() {
+        final FragmentManager fragmentManager = getFragmentManager();
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                menuContentLayout.removeAllViews();
                 switch (item.getItemId()) {
                     case R.id.task_creation_menu:
-                        menuContentLayout.addView(taskCreation);
+                    default:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.main_task_fragment, taskCreationFragment).commit();
                         return true;
                     case R.id.pre_deploy_menu:
                         Toast.makeText(getApplicationContext(), "Pre-Deploy selected!", Toast.LENGTH_SHORT).show();
@@ -60,9 +63,7 @@ public class MainTaskActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Active-Tasks selected!", Toast.LENGTH_SHORT).show();
                         return true;
                 }
-                return false;
             }
-
         });
     }
 }
