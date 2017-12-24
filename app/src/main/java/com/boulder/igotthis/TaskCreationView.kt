@@ -1,86 +1,90 @@
 /*
  * Copyright (C) 2017 Ankit Sadana
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-package com.boulder.igotthis;
 
-import android.app.Fragment;
-import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
-import android.content.Intent;
-import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
+package com.boulder.igotthis
 
-import com.boulder.igotthis.task.util.ActionType;
-import com.boulder.igotthis.task.util.EventType;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
+import android.bluetooth.BluetoothAdapter
+import android.content.Context
+import android.content.Intent
+import android.net.wifi.WifiManager
+import android.support.annotation.Nullable
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.Spinner
+import com.boulder.igotthis.task.util.ActionType
+import com.boulder.igotthis.task.util.EventType
+import java.io.BufferedReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * Class Description
  *
- * @author ankit
- * @since 05/02/2017
+ * @author asadana
+ * @since 12/24/17
  */
 
-public class TaskCreationFragment extends Fragment {
-
-    private View rootView;
-    private Context context;
+class TaskCreationView {
+    private var TAG: String? = this.javaClass.name
+    private var rootView: View? = null
+    private var context: Context? = null
 
     // Event Elements
-    private Spinner eventDropDownSpinner;
-    private LinearLayout itemActionLayout;
+    private var eventDropDownSpinner:Spinner? = null
+    private var itemActionLayout: LinearLayout? = null
     // Action Elements
-    private Spinner actionDropDownSpinner;
-    private ImageButton addActionButton;
+    private var actionDropDownSpinner: Spinner? = null
+    private var addActionButton: ImageButton? = null
+    private var mAddEventActionButton:Button? = null
+    private var mResetEventActionButton: Button? = null
 
-    public TaskCreationFragment() {
-        super();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    fun View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
         rootView = inflater.inflate(R.layout.task_creation_layout, container, false);
         context = rootView.getContext();
         eventDropDownSpinner = (Spinner) rootView.findViewById(R.id.event_drop_down_list);
         itemActionLayout = (LinearLayout) rootView.findViewById(R.id.item_action_select_layout);
-        populateEventSpinner();
+        itemActionLayout.addView(View.inflate(context, R.layout.task_creation_item_action, null));
+        actionDropDownSpinner = (Spinner) itemActionLayout.findViewById(R.id.item_drop_down_list);
+        addActionButton = (ImageButton) itemActionLayout.findViewById(R.id.item_action_add_action_button);
+        mAddEventActionButton = (Button) rootView.findViewById(R.id.button_add);
+        mResetEventActionButton = (Button) rootView.findViewById(R.id.button_reset);
+        init();
         return rootView;
+    }
+
+    private void init() {
+        Log.d(TAG, "init");
+        addActionButton.setEnabled(false);   // TODO: Keep disabled till multiple actions can be linked to one event.
+        mAddEventActionButton.setEnabled(false);
+        mResetEventActionButton.setEnabled(false);
+        addButtonListeners();
+        populateEventSpinner();
+    }
+
+    private void addButtonListeners() {
+        mAddEventActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void populateEventSpinner() {
@@ -101,7 +105,7 @@ public class TaskCreationFragment extends Fragment {
                     case BLUETOOTH_DISCONNECTED:
                     case WIFI_CONNECTED:
                     case WIFI_DISCONNECTED:
-                        addActionView();
+                        addActionView(EventType.valueAt(position));
                         break;
                     // TODO temporarily do nothing for charging urlConnectionected/disurlConnectionected.
                     case CHARGING_CONNECTED:
@@ -119,12 +123,7 @@ public class TaskCreationFragment extends Fragment {
         });
     }
 
-    private void addActionView() {
-        itemActionLayout.addView(View.inflate(context, R.layout.task_creation_item_action, null));
-        actionDropDownSpinner = (Spinner) itemActionLayout.findViewById(R.id.item_drop_down_list);
-        addActionButton = (ImageButton) itemActionLayout.findViewById(R.id.item_action_add_action_button);
-        addActionButton.setEnabled(false);  // TODO: keep this disabled till functionality is implemented
-
+    private void addActionView(EventType eventType) {
         final List<String> actionDropDownList = new ArrayList<String>(ActionType.values().length);
         // TODO : make this dependent on the permissions given, otherwise disable it.
         // TODO : make this dynamic so there's no duplicates from previous choices?
