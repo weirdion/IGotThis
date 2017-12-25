@@ -23,4 +23,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DropDownStyle">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:background">@color/colorLightGrey</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>
