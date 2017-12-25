@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.task.util
+package com.boulder.igotthis.util
 
+import android.content.Context
 import android.support.annotation.NonNull
+import android.view.ViewGroup
+import com.boulder.igotthis.interfaces.ILifecycleProvider
 
 /**
- * Task is a class defined to contain all the objects required to define a task to be
- * ran in the background after user selection.
+ * Base class that extends {@link ILifecycleProvider} to provide common logic constructor.
  *
  * @author asadana
  * @since 12/24/17
  */
-class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
-    private var eventType = EventType.NONE
-    private var actionType = ActionType.NONE
+abstract class BaseLifecycleProvider(@NonNull context: Context, @NonNull viewGroupContainer: ViewGroup) : ILifecycleProvider {
 
-    init {
-        this.eventType = eventType
-        this.actionType = actionType
-    }
+    protected var context: Context? = context
+    protected var viewGroupContainer: ViewGroup? = viewGroupContainer
 }

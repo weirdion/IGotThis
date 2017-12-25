@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.task.util
+package com.boulder.igotthis.util.task
 
 import com.boulder.igotthis.R
 
@@ -64,7 +64,7 @@ enum class EventType {
                     return EventType.values()[position]
                 }
             }
-            return EventType.NONE
+            return NONE
         }
 
         /**
@@ -76,7 +76,7 @@ enum class EventType {
         fun getPositionOf(eventType: EventType?): Int {
             if (eventType != null) {
                 for (position in 0 until EventType.values().size) {
-                    if (eventType == EventType.valueAt(position))
+                    if (eventType == valueAt(position))
                         return position
                 }
             }

@@ -14,16 +14,25 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.interfaces
+package com.boulder.igotthis.util.task
+
+import android.support.annotation.NonNull
+import com.boulder.igotthis.util.task.ActionType
+import com.boulder.igotthis.util.task.EventType
 
 /**
- * Interface class for providing lifecycle Views used to replace the main content in the activity.
+ * Task is a class defined to contain all the objects required to define a task to be
+ * ran in the background after user selection.
  *
  * @author asadana
  * @since 12/24/17
  */
-interface IViewLifecycleProvider {
-    fun onResume()
-    fun onPause()
-    fun getRootView()
+class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
+    private var eventType = EventType.NONE
+    private var actionType = ActionType.NONE
+
+    init {
+        this.eventType = eventType
+        this.actionType = actionType
+    }
 }

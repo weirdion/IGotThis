@@ -27,6 +27,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Spinner
+import com.boulder.igotthis.interfaces.IViewLifecycleProvider
 import com.boulder.igotthis.task.util.ActionType
 import com.boulder.igotthis.task.util.EventType
 import java.io.BufferedReader
@@ -40,7 +41,19 @@ import java.net.URL
  * @since 12/24/17
  */
 
-class TaskCreationView {
+class TaskCreationView : IViewLifecycleProvider {
+    override fun onResume() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onPause() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getRootView() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var TAG: String? = this.javaClass.name
     private var rootView: View? = null
     private var context: Context? = null

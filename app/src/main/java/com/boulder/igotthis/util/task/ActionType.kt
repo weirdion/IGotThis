@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.task.util
+package com.boulder.igotthis.util.task
 
 import com.boulder.igotthis.R
 
@@ -67,10 +67,10 @@ enum class ActionType {
         fun valueAt(position: Int?): ActionType {
             if (position != null) {
                 if (position < ActionType.values().size) {
-                    return ActionType.valueAt(position)
+                    return valueAt(position)
                 }
             }
-            return ActionType.NONE
+            return NONE
         }
 
         /**
@@ -82,7 +82,7 @@ enum class ActionType {
         fun getPositionOf(actionType: ActionType?): Int {
             if (actionType != null) {
                 for (position in 0 until EventType.values().size) {
-                    if (actionType == ActionType.valueAt(position))
+                    if (actionType == valueAt(position))
                         return position
                 }
             }
