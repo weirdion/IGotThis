@@ -25,13 +25,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.Toast
 import com.boulder.igotthis.util.BaseLifecycleProvider
 import com.boulder.igotthis.util.task.ActionType
 import com.boulder.igotthis.util.task.EventType
 import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.SocketTimeoutException
@@ -58,6 +63,8 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
     private val addEventActionButton: Button
     private val mResetEventActionButton: Button
 
+    private val performRequestAsyncTask = PerformRequestAsyncTask()
+
     init {
         Log.d(tag, "init")
         rootView = LayoutInflater.from(context).inflate(R.layout.task_creation_layout, viewGroupContainer, false)
@@ -83,7 +90,7 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
     private fun populateEventSpinner() {
         val eventDropDownList: MutableList<String> = mutableListOf()
         // TODO : make this dependent on the permissions given, otherwise disable it.
-        EventType.values().mapTo(eventDropDownList) { context!!.getString(EventType.getStringResource(it)) }
+        EventType.values().mapTo(eventDropDownList) { context.getString(EventType.getStringResource(it)) }
 
         val eventDropDownAdapter: ArrayAdapter<String>? = ArrayAdapter(context, R.layout.drop_down_item, eventDropDownList)
         eventDropDownAdapter?.setDropDownViewResource(R.layout.drop_down_item)
@@ -114,7 +121,7 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
         // TODO : make this dependent on the permissions given, otherwise disable it.
         // TODO : make this dynamic so there's no duplicates from previous choices?
         for (actionType: ActionType in ActionType.values()) {
-            actionDropDownList.add(context!!.getString(ActionType.getStringResource(actionType)))
+            actionDropDownList.add(context.getString(ActionType.getStringResource(actionType)))
         }
         val actionDropDownAdapter: ArrayAdapter<String>? = ArrayAdapter(context, R.layout.drop_down_item, actionDropDownList)
         actionDropDownAdapter?.setDropDownViewResource(R.layout.drop_down_item)
@@ -134,25 +141,24 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
                             bluetoothAdapter.disable()
                     }
                     ActionType.TURN_WIFI_ON -> {
-                        val wifiManager: WifiManager? = context?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                        val wifiManager: WifiManager? = context.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
                         if (wifiManager != null && !wifiManager.isWifiEnabled)
                             wifiManager.isWifiEnabled = true
                     }
                     ActionType.TURN_WIFI_OFF -> {
-                        val wifiManager: WifiManager? = context?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                        val wifiManager: WifiManager? = context.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
                         if (wifiManager != null && wifiManager.isWifiEnabled)
                             wifiManager.isWifiEnabled = false
                     }
                     ActionType.OPEN_APP -> {
-                        val launchIntent: Intent? = context?.packageManager?.getLaunchIntentForPackage("com.waze")
+                        val launchIntent: Intent? = context.packageManager?.getLaunchIntentForPackage("com.waze")
                         launchIntent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        context?.startActivity(launchIntent)
+                        context.startActivity(launchIntent)
                     }
                     ActionType.SEND_MESSAGE_USING_TELEGRAM -> {
                         // TODO
                     }
                     ActionType.PERFORM_CUSTOM_ACTION -> {
-                        val performRequestAsyncTask = PerformRequestAsyncTask()
                         performRequestAsyncTask.execute("https://www.google.com", "GET")
                     }
                     else -> {
@@ -172,22 +178,25 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
     }
 
     override fun onPause() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (performRequestAsyncTask.status == AsyncTask.Status.PENDING ||
+                performRequestAsyncTask.status == AsyncTask.Status.RUNNING) {
+            performRequestAsyncTask.cancel(true)
+        }
     }
 
-    override fun getRootView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getRootView(): View {
+        return rootView
     }
 
     inner class PerformRequestAsyncTask : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
             val urlString: String? = params[0]
-            var resultToDisplay: String = ""
+            var resultToDisplay = ""
             var httpURLConnection: HttpURLConnection? = null
 
             try {
 
-                var url = URL(urlString)
+                val url = URL(urlString)
                 httpURLConnection = url.openConnection() as HttpURLConnection
                 httpURLConnection.readTimeout = 15000
                 httpURLConnection.connectTimeout = 15000
@@ -211,30 +220,25 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 
                 //if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                val allText = httpURLConnection.inputStream.bufferedReader().use(BufferedReader::readText)
+                resultToDisplay = httpURLConnection.inputStream.bufferedReader().use(BufferedReader::readText)
 
                 /*} else {
                                 resultToDisplay = "false : " + responseCode;
-                            }*/
+                }*/
 
-            }
-            catch (error: MalformedURLException) {
+            } catch (error: MalformedURLException) {
                 //Handles an incorrectly entered URL
                 Log.e(tag, "doInBackground: ", error)
-            }
-            catch (error: SocketTimeoutException) {
+            } catch (error: SocketTimeoutException) {
                 //Handles URL access timeout.
                 Log.e(tag, "doInBackground: ", error)
-            }
-            catch (error: IOException) {
+            } catch (error: IOException) {
                 //Handles input and output error
                 Log.e(tag, "doInBackground: ", error)
-            }
-            finally {
+            } finally {
                 if (httpURLConnection != null) // Make sure the connection is not null.
                     httpURLConnection.disconnect()
             }
-
             return resultToDisplay
         }
 

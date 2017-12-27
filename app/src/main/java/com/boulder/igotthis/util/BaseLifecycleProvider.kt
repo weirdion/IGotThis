@@ -27,8 +27,5 @@ import com.boulder.igotthis.interfaces.ILifecycleProvider
  * @author asadana
  * @since 12/24/17
  */
-abstract class BaseLifecycleProvider(@NonNull context: Context, @NonNull viewGroupContainer: ViewGroup) : ILifecycleProvider {
-
-    protected var context: Context? = context
-    protected var viewGroupContainer: ViewGroup? = viewGroupContainer
-}
+abstract class BaseLifecycleProvider(protected @NonNull var context: Context,
+                                     protected @NonNull var viewGroupContainer: ViewGroup) : ILifecycleProvider

@@ -16,6 +16,8 @@
 
 package com.boulder.igotthis.interfaces
 
+import android.view.View
+
 /**
  * Interface class for providing lifecycle Views used to replace the main content in the activity.
  *
@@ -27,12 +29,14 @@ interface ILifecycleProvider {
      * Method that serves as a lifecycle call to be called from Activity's onResume().
      */
     fun onResume()
+
     /**
      * Method that serves as a lifecycle call to be called from Activity's onPause().
      */
     fun onPause()
+
     /**
      * Method that serves as a base method to return layout view.
      */
-    fun getRootView()
+    fun getRootView(): View
 }
