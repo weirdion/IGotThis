@@ -23,9 +23,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="DropDownStyle">
+    <style name="DropDownStyle_Basic">
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:background">@color/colorLightGrey</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="DropDownStyle" parent="DropDownStyle_Basic">
+        <item name="android:layout_width">@dimen/drop_down_list_width</item>
+        <item name="android:layout_height">@dimen/drop_down_list_height</item>
     </style>
 </resources>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Ankit Sadana
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,58 +18,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="@dimen/task_creation_main_layout_padding">
 
     <TextView
         android:id="@+id/event_drop_down_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/task_creation_on_event" />
+        android:text="@string/task_creation_on_event"
+        android:textSize="20sp" />
 
     <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/event_drop_down_list"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:id="@+id/event_drop_down_spinner"
         style="@style/DropDownStyle"
-        android:spinnerMode="dropdown"/>
+        android:layout_marginBottom="@dimen/drop_down_list_margin_bottom"
+        android:spinnerMode="dropdown" />
 
-    <ScrollView
+    <TextView
+        android:id="@+id/action_drop_down_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="@string/task_creation_on_action"
+        android:textSize="20sp" />
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/task_creation_add_action_items_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/task_creation_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/task_creation_button_layout_margin"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_reset_task_creation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:enabled="false"
+            android:text="@string/task_creation_button_reset" />
 
-            <LinearLayout
-                android:id="@+id/item_action_select_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="50dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_reset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="27dp"
-                    android:text="@string/task_creation_button_reset" />
-
-                <Button
-                    android:id="@+id/button_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:text="@string/task_creation_button_add" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/button_add_created_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/task_creation_button_add" />
+    </LinearLayout>
 </LinearLayout>

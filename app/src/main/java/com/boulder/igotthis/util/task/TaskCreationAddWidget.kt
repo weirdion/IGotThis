@@ -39,8 +39,8 @@ class TaskCreationAddWidget(@NonNull context: Context, @Nullable viewGroupContai
 
     init {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        layoutView = layoutInflater.inflate(R.layout.task_creation_item_action, viewGroupContainer)
+        layoutView = layoutInflater.inflate(R.layout.task_creation_item_action, viewGroupContainer, false)
         addActionItemDropDownSpinner = layoutView.findViewById(R.id.add_action_item_drop_down_spinner)
-        addImageButton = layoutView.findViewById(R.id.add)
+        addImageButton = layoutView.findViewById(R.id.item_action_add_action_button)
     }
 }

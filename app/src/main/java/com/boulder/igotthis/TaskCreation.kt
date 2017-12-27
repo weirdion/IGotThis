@@ -28,13 +28,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
 import com.boulder.igotthis.util.BaseLifecycleProvider
 import com.boulder.igotthis.util.task.ActionType
 import com.boulder.igotthis.util.task.EventType
+import com.boulder.igotthis.util.task.TaskCreationAddWidget
 import java.io.BufferedReader
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -56,29 +56,22 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 
     // Event Elements
     private val eventDropDownSpinner: Spinner
-    private val itemActionLayout: LinearLayout
-    // Action Elements
-    private val actionDropDownSpinner: Spinner
-    private val addActionButton: ImageButton
+    private val addActionItemsLayout: LinearLayout
     private val addEventActionButton: Button
-    private val mResetEventActionButton: Button
+    private val resetEventActionButton: Button
 
     private val performRequestAsyncTask = PerformRequestAsyncTask()
 
     init {
         Log.d(tag, "init")
         rootView = LayoutInflater.from(context).inflate(R.layout.task_creation_layout, viewGroupContainer, false)
-        eventDropDownSpinner = rootView.findViewById(R.id.event_drop_down_list)
-        itemActionLayout = rootView.findViewById(R.id.item_action_select_layout)
-        itemActionLayout.addView(View.inflate(context, R.layout.task_creation_item_action, null))
-        actionDropDownSpinner = itemActionLayout.findViewById(R.id.item_drop_down_list)
-        addActionButton = itemActionLayout.findViewById(R.id.item_action_add_action_button)
-        addEventActionButton = rootView.findViewById(R.id.button_add)
-        mResetEventActionButton = rootView.findViewById(R.id.button_reset)
+        eventDropDownSpinner = rootView.findViewById(R.id.event_drop_down_spinner)
+        addActionItemsLayout = rootView.findViewById(R.id.task_creation_add_action_items_layout)
+        addEventActionButton = rootView.findViewById(R.id.button_add_created_task)
+        resetEventActionButton = rootView.findViewById(R.id.button_reset_task_creation)
 
-        addActionButton.isEnabled = false   // TODO: Keep disabled till multiple actions can be linked to one event.
         addEventActionButton.isEnabled = false
-        mResetEventActionButton.isEnabled = false
+        resetEventActionButton.isEnabled = false
         addButtonListeners()
         populateEventSpinner()
     }
@@ -103,10 +96,10 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
                     EventType.WIFI_CONNECTED,
                     EventType.WIFI_DISCONNECTED -> addActionView(EventType.valueAt(position))
 
-                // TODO temporarily do nothing for charging urlConnectionected/disurlConnectionected.
+                    // TODO temporarily do nothing for charging urlConnectionected/disurlConnectionected.
                     EventType.CHARGING_CONNECTED,
-                    EventType.CHARGING_DISCONNECTED -> itemActionLayout.removeAllViews()
-                    else -> itemActionLayout.removeAllViews()
+                    EventType.CHARGING_DISCONNECTED -> addActionItemsLayout.removeAllViews()
+                    else -> addActionItemsLayout.removeAllViews()
                 }
             }
 
@@ -117,6 +110,9 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
     }
 
     private fun addActionView(eventType: EventType?) {
+        // TODO: This likely needs to be refactored in a way to include multiple action additions
+        val taskCreationAddWidget = TaskCreationAddWidget(context, addActionItemsLayout)
+        addActionItemsLayout.addView(taskCreationAddWidget.layoutView)
         val actionDropDownList: MutableList<String> = mutableListOf()
         // TODO : make this dependent on the permissions given, otherwise disable it.
         // TODO : make this dynamic so there's no duplicates from previous choices?
@@ -126,8 +122,8 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
         val actionDropDownAdapter: ArrayAdapter<String>? = ArrayAdapter(context, R.layout.drop_down_item, actionDropDownList)
         actionDropDownAdapter?.setDropDownViewResource(R.layout.drop_down_item)
 
-        actionDropDownSpinner.adapter = actionDropDownAdapter
-        actionDropDownSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        taskCreationAddWidget.addActionItemDropDownSpinner.adapter = actionDropDownAdapter
+        taskCreationAddWidget.addActionItemDropDownSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 when (ActionType.valueAt(position)) {
                     ActionType.TURN_BLUETOOTH_ON -> {

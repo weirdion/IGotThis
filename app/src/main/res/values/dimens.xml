@@ -17,4 +17,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="drop_down_list_width">300dp</dimen>
+    <!--Task creation-->
+    <dimen name="task_creation_main_layout_padding">30dp</dimen>
+    <dimen name="task_creation_button_layout_margin">20dp</dimen>
+    <!--Drop Down List-->
+    <dimen name="drop_down_list_height">50dp</dimen>
+    <dimen name="drop_down_list_margin_top">10dp</dimen>
+    <dimen name="drop_down_list_margin_bottom">20dp</dimen>
+    <dimen name="drop_down_item_padding_bottom_top">5dp</dimen>
+    <dimen name="drop_down_item_padding_start_end">10dp</dimen>
 </resources>

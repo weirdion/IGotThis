@@ -45,4 +45,5 @@
 
     <!-- Active Tasks tab -->
     <string name="active_tasks">Active Tasks</string>
+    <string name="task_creation_on_action">Do Action(s)</string>
 </resources>

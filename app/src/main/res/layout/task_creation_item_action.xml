@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<merge
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,4 +35,4 @@
         android:layout_weight="0.1"
         android:visibility="gone"
         android:src="@mipmap/ic_launcher_round" />
-</merge>
+</LinearLayout>
