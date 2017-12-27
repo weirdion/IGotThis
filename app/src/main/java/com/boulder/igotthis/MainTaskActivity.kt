@@ -32,31 +32,39 @@ import kotlinx.android.synthetic.main.activity_main_task.*
  * @since 12/24/17
  */
 class MainTaskActivity : AppCompatActivity() {
-    private var context: Context? = null
-    private var mainContentLayout: FrameLayout? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_task)
-
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-    }
+    private lateinit var context: Context
+    private lateinit var taskCreationObj: TaskCreation
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.task_creation_menu -> {
-                Toast.makeText(applicationContext, "Tasks Creation Menu", Toast.LENGTH_LONG).show()
+                main_content.removeAllViews()
+                main_content.addView(taskCreationObj.getRootView())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.pre_deploy_menu -> {
+                main_content.removeAllViews()
                 Toast.makeText(applicationContext, "Pre Deploy Menu", Toast.LENGTH_LONG).show()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.active_tasks_menu -> {
+                main_content.removeAllViews()
                 Toast.makeText(applicationContext, "Active Tasks Menu", Toast.LENGTH_LONG).show()
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main_task)
+        init()
+    }
+
+    private fun init() {
+        context = this.applicationContext
+        bottom_navigation_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        taskCreationObj = TaskCreation(context, main_content)
     }
 }
