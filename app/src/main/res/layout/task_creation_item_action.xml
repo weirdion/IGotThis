@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Ankit Sadana
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +13,26 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<LinearLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_centerHorizontal="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:orientation="horizontal">
 
     <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/item_drop_down_list"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_weight="0.9"
-        android:layout_margin="10dp"
+        android:id="@+id/add_action_item_drop_down_spinner"
         style="@style/DropDownStyle"
-        android:spinnerMode="dropdown"/>
+        android:layout_margin="10dp"
+        android:layout_weight="0.9"
+        android:spinnerMode="dropdown" />
+
+    <!--TODO: Keep disabled till multiple actions can be linked to one event.-->
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/item_action_add_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_weight="0.1"
-        android:src="@mipmap/ic_launcher_round"/>
-</LinearLayout>
+        android:visibility="gone"
+        android:src="@mipmap/ic_launcher_round" />
+</merge>
