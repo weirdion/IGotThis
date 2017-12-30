@@ -67,7 +67,7 @@ enum class ActionType {
         fun valueAt(position: Int?): ActionType {
             if (position != null) {
                 if (position < ActionType.values().size) {
-                    return valueAt(position)
+                    return ActionType.values()[position]
                 }
             }
             return NONE
