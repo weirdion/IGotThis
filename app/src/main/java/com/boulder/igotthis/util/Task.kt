@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.util.task
+package com.boulder.igotthis.util
 
 import android.support.annotation.NonNull
-import com.boulder.igotthis.util.task.ActionType
-import com.boulder.igotthis.util.task.EventType
+import com.boulder.igotthis.base.ActionType
+import com.boulder.igotthis.base.EventType
 
 /**
  * Task is a class defined to contain all the objects required to define a task to be

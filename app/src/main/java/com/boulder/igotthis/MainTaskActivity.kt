@@ -20,8 +20,10 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
+import com.boulder.igotthis.views.TaskCreation
 import kotlinx.android.synthetic.main.activity_main_task.*
 
 /**
@@ -32,6 +34,8 @@ import kotlinx.android.synthetic.main.activity_main_task.*
  * @since 12/24/17
  */
 class MainTaskActivity : AppCompatActivity() {
+    private val tag: String = this.javaClass.name
+
     private lateinit var context: Context
     private lateinit var taskCreationObj: TaskCreation
 
@@ -52,8 +56,11 @@ class MainTaskActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Active Tasks Menu", Toast.LENGTH_LONG).show()
                 return@OnNavigationItemSelectedListener true
             }
+            else -> {
+                Log.w(tag, "Unknown option selection in bottom navigation drawer: " + item)
+                return@OnNavigationItemSelectedListener false
+            }
         }
-        false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis
+package com.boulder.igotthis.views
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
@@ -31,10 +31,11 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
-import com.boulder.igotthis.util.BaseLifecycleProvider
-import com.boulder.igotthis.util.task.ActionType
-import com.boulder.igotthis.util.task.EventType
-import com.boulder.igotthis.util.task.TaskCreationAddWidget
+import com.boulder.igotthis.R
+import com.boulder.igotthis.base.ActionType
+import com.boulder.igotthis.base.BaseLifecycleProvider
+import com.boulder.igotthis.base.EventType
+import com.boulder.igotthis.views.widget.TaskCreationAddWidget
 import java.io.BufferedReader
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -50,7 +51,7 @@ import java.net.URL
  */
 
 class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecycleProvider(context, viewGroupContainer) {
-    private val tag: String? = this.javaClass.name
+    private val tag: String = this.javaClass.name
 
     override lateinit var rootView: View
 

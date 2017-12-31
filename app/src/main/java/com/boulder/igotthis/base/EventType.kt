@@ -14,46 +14,40 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.util.task
+package com.boulder.igotthis.base
 
 import com.boulder.igotthis.R
 
 /**
- * ActionType is a enum class that holds all the actions that might happen.
- *
  * @author asadana
  * @since 12/24/17
  */
-enum class ActionType {
+enum class EventType {
     NONE,
-    TURN_BLUETOOTH_ON,
-    TURN_BLUETOOTH_OFF,
-    TURN_WIFI_ON,
-    TURN_WIFI_OFF,
-    OPEN_APP,
-    // TODO: make this generic
-    //SEND_MESSAGE
-    SEND_MESSAGE_USING_TELEGRAM,
-    PERFORM_CUSTOM_ACTION;
+    BLUETOOTH_CONNECTED,
+    BLUETOOTH_DISCONNECTED,
+    CHARGING_CONNECTED,
+    CHARGING_DISCONNECTED,
+    WIFI_CONNECTED,
+    WIFI_DISCONNECTED;
 
     companion object {
 
         /**
          * Method to fetch the String resource for the corresponding enum.
          *
-         * @param actionType Contains the enum value for the resource.
+         * @param eventType Contains the enum value for the resource.
          * @return the resource for the string.
          */
-        fun getStringResource(actionType: ActionType?): Int {
-            return when (actionType) {
-                TURN_BLUETOOTH_ON -> R.string.action_type_bluetooth_turn_on
-                TURN_BLUETOOTH_OFF -> R.string.action_type_bluetooth_turn_off
-                TURN_WIFI_ON -> R.string.action_type_wifi_turn_on
-                TURN_WIFI_OFF -> R.string.action_type_wifi_turn_off
-                OPEN_APP -> R.string.action_type_open_app
-                SEND_MESSAGE_USING_TELEGRAM -> R.string.action_type_send_message_telegram
-                PERFORM_CUSTOM_ACTION -> R.string.action_type_perform_custom_action
-                else -> R.string.action_type_default
+        fun getStringResource(eventType: EventType?): Int {
+            return when (eventType) {
+                BLUETOOTH_CONNECTED -> R.string.event_type_bluetooth_connected
+                BLUETOOTH_DISCONNECTED -> R.string.event_type_bluetooth_disconnected
+                CHARGING_CONNECTED -> R.string.event_type_charging_connected
+                CHARGING_DISCONNECTED -> R.string.event_type_charging_disconnected
+                WIFI_CONNECTED -> R.string.event_type_wifi_connected
+                WIFI_DISCONNECTED -> R.string.event_type_wifi_disconnected
+                else -> R.string.event_type_default
             }
         }
 
@@ -64,25 +58,25 @@ enum class ActionType {
          * @param position Contains the position chosen from the list of enums.
          * @return the corresponding enum.
          */
-        fun valueAt(position: Int?): ActionType {
+        fun valueAt(position: Int?): EventType {
             if (position != null) {
-                if (position < ActionType.values().size) {
-                    return ActionType.values()[position]
+                if (position < EventType.values().size) {
+                    return EventType.values()[position]
                 }
             }
             return NONE
         }
 
         /**
-         * Method to get the position of the ActionType passed.
+         * Method to get the position of the EventType passed.
          *
-         * @param actionType Contains the ActionType enum object being queried.
+         * @param eventType Contains the EventType enum object being queried.
          * @return the corresponding position, -1 if not found.
          */
-        fun getPositionOf(actionType: ActionType?): Int {
-            if (actionType != null) {
+        fun getPositionOf(eventType: EventType?): Int {
+            if (eventType != null) {
                 for (position in 0 until EventType.values().size) {
-                    if (actionType == valueAt(position))
+                    if (eventType == valueAt(position))
                         return position
                 }
             }

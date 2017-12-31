@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.util.task
+package com.boulder.igotthis.views.widget
 
 import android.content.Context
 import android.support.annotation.NonNull

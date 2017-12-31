@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.util
+package com.boulder.igotthis.base
 
 import android.content.Context
 import android.support.annotation.NonNull
 import android.view.ViewGroup
-import com.boulder.igotthis.interfaces.ILifecycleProvider
 
 /**
  * Base class that extends {@link ILifecycleProvider} to provide common logic constructor.

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.interfaces
+package com.boulder.igotthis.base
 
 import android.view.View
 
