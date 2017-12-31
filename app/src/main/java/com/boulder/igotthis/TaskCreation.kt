@@ -50,9 +50,9 @@ import java.net.URL
  */
 
 class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecycleProvider(context, viewGroupContainer) {
-
     private val tag: String? = this.javaClass.name
-    private val rootView: View
+
+    override lateinit var rootView: View
 
     // Event Elements
     private val eventDropDownSpinner: Spinner
@@ -178,10 +178,6 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
                 performRequestAsyncTask.status == AsyncTask.Status.RUNNING) {
             performRequestAsyncTask.cancel(true)
         }
-    }
-
-    override fun getRootView(): View {
-        return rootView
     }
 
     inner class PerformRequestAsyncTask : AsyncTask<String, String, String>() {

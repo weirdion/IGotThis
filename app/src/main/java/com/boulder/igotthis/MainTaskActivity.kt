@@ -39,7 +39,7 @@ class MainTaskActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.task_creation_menu -> {
                 main_content.removeAllViews()
-                main_content.addView(taskCreationObj.getRootView())
+                main_content.addView(taskCreationObj.rootView)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.pre_deploy_menu -> {
@@ -59,12 +59,13 @@ class MainTaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_task)
-        init()
+        initialize()
     }
 
-    private fun init() {
+    private fun initialize() {
         context = this.applicationContext
         bottom_navigation_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         taskCreationObj = TaskCreation(context, main_content)
+        bottom_navigation_view.selectedItemId = R.id.task_creation_menu
     }
 }

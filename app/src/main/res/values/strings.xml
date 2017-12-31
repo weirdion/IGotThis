@@ -37,7 +37,7 @@
     <string name="action_type_wifi_turn_on">Turn Wi-Fi On</string>
     <string name="action_type_wifi_turn_off">Turn Wi-Fi Off</string>
     <string name="action_type_open_app">Open App</string>
-    <string name="action_type_send_message_telegram">Message with Allo</string>
+    <string name="action_type_send_message_telegram">Message with Telegram</string>
     <string name="action_type_perform_custom_action">Perform Custom Action</string>
 
     <!-- Pre-Deploy tab -->
