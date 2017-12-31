@@ -21,10 +21,10 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.FrameLayout
 import android.widget.Toast
 import com.boulder.igotthis.views.TaskCreation
-import kotlinx.android.synthetic.main.activity_main_task.*
+import kotlinx.android.synthetic.main.activity_main_task.bottom_navigation_view
+import kotlinx.android.synthetic.main.activity_main_task.main_content
 
 /**
  * MainTaskActivity
@@ -34,45 +34,45 @@ import kotlinx.android.synthetic.main.activity_main_task.*
  * @since 12/24/17
  */
 class MainTaskActivity : AppCompatActivity() {
-    private val tag: String = this.javaClass.name
+	private val tag: String = this.javaClass.name
 
-    private lateinit var context: Context
-    private lateinit var taskCreationObj: TaskCreation
+	private lateinit var context: Context
+	private lateinit var taskCreationObj: TaskCreation
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.task_creation_menu -> {
-                main_content.removeAllViews()
-                main_content.addView(taskCreationObj.rootView)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.pre_deploy_menu -> {
-                main_content.removeAllViews()
-                Toast.makeText(applicationContext, "Pre Deploy Menu", Toast.LENGTH_LONG).show()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.active_tasks_menu -> {
-                main_content.removeAllViews()
-                Toast.makeText(applicationContext, "Active Tasks Menu", Toast.LENGTH_LONG).show()
-                return@OnNavigationItemSelectedListener true
-            }
-            else -> {
-                Log.w(tag, "Unknown option selection in bottom navigation drawer: " + item)
-                return@OnNavigationItemSelectedListener false
-            }
-        }
-    }
+	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+		when (item.itemId) {
+			R.id.task_creation_menu -> {
+				main_content.removeAllViews()
+				main_content.addView(taskCreationObj.rootView)
+				return@OnNavigationItemSelectedListener true
+			}
+			R.id.pre_deploy_menu    -> {
+				main_content.removeAllViews()
+				Toast.makeText(applicationContext, "Pre Deploy Menu", Toast.LENGTH_LONG).show()
+				return@OnNavigationItemSelectedListener true
+			}
+			R.id.active_tasks_menu  -> {
+				main_content.removeAllViews()
+				Toast.makeText(applicationContext, "Active Tasks Menu", Toast.LENGTH_LONG).show()
+				return@OnNavigationItemSelectedListener true
+			}
+			else                    -> {
+				Log.w(tag, "Unknown option selection in bottom navigation drawer: " + item)
+				return@OnNavigationItemSelectedListener false
+			}
+		}
+	}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_task)
-        initialize()
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main_task)
+		initialize()
+	}
 
-    private fun initialize() {
-        context = this.applicationContext
-        bottom_navigation_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        taskCreationObj = TaskCreation(context, main_content)
-        bottom_navigation_view.selectedItemId = R.id.task_creation_menu
-    }
+	private fun initialize() {
+		context = this.applicationContext
+		bottom_navigation_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+		taskCreationObj = TaskCreation(context, main_content)
+		bottom_navigation_view.selectedItemId = R.id.task_creation_menu
+	}
 }

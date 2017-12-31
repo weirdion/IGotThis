@@ -33,14 +33,14 @@ import com.boulder.igotthis.R
  * @since 12/26/17
  */
 class TaskCreationAddWidget(@NonNull context: Context, @Nullable viewGroupContainer: ViewGroup) {
-    val layoutView: View
-    val addActionItemDropDownSpinner: Spinner
-    val addImageButton: ImageButton
+	val layoutView: View
+	val addActionItemDropDownSpinner: Spinner
+	val addImageButton: ImageButton
 
-    init {
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        layoutView = layoutInflater.inflate(R.layout.task_creation_item_action, viewGroupContainer, false)
-        addActionItemDropDownSpinner = layoutView.findViewById(R.id.add_action_item_drop_down_spinner)
-        addImageButton = layoutView.findViewById(R.id.item_action_add_action_button)
-    }
+	init {
+		val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+		layoutView = layoutInflater.inflate(R.layout.task_creation_item_action, viewGroupContainer, false)
+		addActionItemDropDownSpinner = layoutView.findViewById(R.id.add_action_item_drop_down_spinner)
+		addImageButton = layoutView.findViewById(R.id.item_action_add_action_button)
+	}
 }

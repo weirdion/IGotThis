@@ -25,17 +25,18 @@ import android.view.View
  * @since 12/24/17
  */
 interface ILifecycleProvider {
-    /**
-     * rootView that will contain the base layout.
-     */
-    var rootView: View
-    /**
-     * Method that serves as a lifecycle call to be called from Activity's onResume().
-     */
-    fun onResume()
+	/**
+	 * rootView that will contain the base layout.
+	 */
+	var rootView: View
 
-    /**
-     * Method that serves as a lifecycle call to be called from Activity's onPause().
-     */
-    fun onPause()
+	/**
+	 * Method that serves as a lifecycle call to be called from Activity's onResume().
+	 */
+	fun onResume()
+
+	/**
+	 * Method that serves as a lifecycle call to be called from Activity's onPause().
+	 */
+	fun onPause()
 }

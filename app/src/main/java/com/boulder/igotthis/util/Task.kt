@@ -28,11 +28,11 @@ import com.boulder.igotthis.base.EventType
  * @since 12/24/17
  */
 class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
-    private var eventType = EventType.NONE
-    private var actionType = ActionType.NONE
+	private var eventType = EventType.NONE
+	private var actionType = ActionType.NONE
 
-    init {
-        this.eventType = eventType
-        this.actionType = actionType
-    }
+	init {
+		this.eventType = eventType
+		this.actionType = actionType
+	}
 }
