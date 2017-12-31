@@ -19,6 +19,8 @@ package com.boulder.igotthis.base
 import com.boulder.igotthis.R
 
 /**
+ * EventType is a enum class that holds all the events that might happen.
+ *
  * @author asadana
  * @since 12/24/17
  */

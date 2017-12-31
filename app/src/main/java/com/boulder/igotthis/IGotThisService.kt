@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.util
+package com.boulder.igotthis
 
-import android.support.annotation.NonNull
-import com.boulder.igotthis.base.ActionType
-import com.boulder.igotthis.base.EventType
+import android.app.IntentService
+import android.content.Intent
+import android.util.Log
 
 /**
- * Task is a class defined to contain all the objects required to define a task to be
- * ran in the background after user selection.
- *
  * @author asadana
- * @since 12/24/17
+ * @since 12/31/17
  */
-class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
-	var eventType = EventType.NONE
-	var actionType = ActionType.NONE // TODO this should be a list
+class IGotThisService(name: String?) : IntentService(name) {
+	constructor() : this("IGotThisService")
+	override fun onCreate() {
+		// TODO load saved event and actions
+	}
 
-	init {
-		this.eventType = eventType
-		this.actionType = actionType
+	private val tag: String = this.javaClass.name
+
+	override fun onHandleIntent(intent: Intent?) {
+		Log.e(tag, "REMOVE ME: Intent incoming had the following data: " + intent?.dataString)
 	}
 }

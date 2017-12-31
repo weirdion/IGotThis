@@ -16,23 +16,21 @@
 
 package com.boulder.igotthis.util
 
-import android.support.annotation.NonNull
-import com.boulder.igotthis.base.ActionType
-import com.boulder.igotthis.base.EventType
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import com.boulder.igotthis.IGotThisService
 
 /**
- * Task is a class defined to contain all the objects required to define a task to be
- * ran in the background after user selection.
+ * BootReceiver to listen for BOOT_COMPLETED intent and start the service
  *
  * @author asadana
- * @since 12/24/17
+ * @since 12/31/17
  */
-class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
-	var eventType = EventType.NONE
-	var actionType = ActionType.NONE // TODO this should be a list
-
-	init {
-		this.eventType = eventType
-		this.actionType = actionType
+class BootReceiver : BroadcastReceiver() {
+	override fun onReceive(context: Context, intent: Intent) {
+		val serviceIntent = Intent(context, IGotThisService::class.java)
+//		context.startService(serviceIntent)
+//      TODO keep commented out till app is ready for regular use
 	}
 }

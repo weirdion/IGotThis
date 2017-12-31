@@ -14,25 +14,16 @@
  * limitations under the License.
  */
 
-package com.boulder.igotthis.util
+package com.boulder.igotthis
 
-import android.support.annotation.NonNull
+import android.app.Application
 import com.boulder.igotthis.base.ActionType
 import com.boulder.igotthis.base.EventType
 
 /**
- * Task is a class defined to contain all the objects required to define a task to be
- * ran in the background after user selection.
- *
  * @author asadana
- * @since 12/24/17
+ * @since 12/31/17
  */
-class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
-	var eventType = EventType.NONE
-	var actionType = ActionType.NONE // TODO this should be a list
-
-	init {
-		this.eventType = eventType
-		this.actionType = actionType
-	}
+class App : Application() {
+	val taskMap: MutableMap<EventType, MutableList<ActionType>> = mutableMapOf()
 }
