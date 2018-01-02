@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import com.boulder.igotthis.R
 import com.boulder.igotthis.base.ActionType
@@ -60,6 +61,7 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 	private val addActionItemsLayout: LinearLayout
 	private val addEventActionButton: Button
 	private val resetEventActionButton: Button
+	private val addDropDownTtitle: TextView
 
 	private val performRequestAsyncTask = PerformRequestAsyncTask()
 
@@ -70,6 +72,7 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 		addActionItemsLayout = rootView.findViewById(R.id.task_creation_add_action_items_layout)
 		addEventActionButton = rootView.findViewById(R.id.button_add_created_task)
 		resetEventActionButton = rootView.findViewById(R.id.button_reset_task_creation)
+		addDropDownTtitle = rootView.findViewById(R.id.action_drop_down_title)
 
 		addEventActionButton.isEnabled = false
 		resetEventActionButton.isEnabled = false
@@ -99,8 +102,8 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 
 				// TODO temporarily do nothing for charging urlConnectionected/disurlConnectionected.
 					EventType.CHARGING_CONNECTED,
-					EventType.CHARGING_DISCONNECTED -> addActionItemsLayout.removeAllViews()
-					else                            -> addActionItemsLayout.removeAllViews()
+					EventType.CHARGING_DISCONNECTED -> clearActionLayout()
+					else                            -> clearActionLayout()
 				}
 			}
 
@@ -112,6 +115,8 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 
 	private fun addActionView(eventType: EventType?) {
 		// TODO: This likely needs to be refactored in a way to include multiple action additions
+
+		addDropDownTtitle.visibility = View.VISIBLE
 		val taskCreationAddWidget = TaskCreationAddWidget(context, addActionItemsLayout)
 		addActionItemsLayout.addView(taskCreationAddWidget.layoutView)
 		val actionDropDownList: MutableList<String> = mutableListOf()
@@ -168,6 +173,11 @@ class TaskCreation(context: Context, viewGroupContainer: ViewGroup) : BaseLifecy
 				Toast.makeText(context, "Nothing selected", Toast.LENGTH_SHORT).show()
 			}
 		}
+	}
+
+	private fun clearActionLayout() {
+		addDropDownTtitle.visibility = View.GONE
+		addActionItemsLayout.removeAllViews()
 	}
 
 	override fun onResume() {

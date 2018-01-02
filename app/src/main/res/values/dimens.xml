@@ -27,4 +27,5 @@
     <dimen name="drop_down_list_margin_bottom">20dp</dimen>
     <dimen name="drop_down_item_padding_bottom_top">5dp</dimen>
     <dimen name="drop_down_item_padding_start_end">10dp</dimen>
+    <dimen name="task_creation_sub_heading_text_size">18sp</dimen>
 </resources>

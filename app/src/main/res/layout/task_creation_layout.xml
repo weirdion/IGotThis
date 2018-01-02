@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/task_creation_on_event"
-        android:textSize="20sp" />
+        android:textSize="@dimen/task_creation_sub_heading_text_size" />
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/event_drop_down_spinner"
@@ -38,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/task_creation_on_action"
-        android:textSize="20sp" />
+        android:visibility="gone"
+        android:textSize="@dimen/task_creation_sub_heading_text_size" />
 
     <LinearLayout
         android:id="@+id/task_creation_add_action_items_layout"
