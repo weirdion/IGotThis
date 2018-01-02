@@ -18,21 +18,36 @@ package com.boulder.igotthis
 
 import android.app.IntentService
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.util.Log
+import com.boulder.igotthis.base.ActionType
+import com.boulder.igotthis.base.EventType
+import com.boulder.igotthis.util.ConnectivityReceiver
 
 /**
  * @author asadana
  * @since 12/31/17
  */
 class IGotThisService(name: String?) : IntentService(name) {
-	constructor() : this("IGotThisService")
-	override fun onCreate() {
-		// TODO load saved event and actions
-	}
-
 	private val tag: String = this.javaClass.name
+	private lateinit var taskMap: MutableMap<EventType, MutableList<ActionType>>
+
+	constructor() : this("IGotThisService")
+
+	override fun onCreate() {
+		taskMap = mutableMapOf()
+		// LOAD taskMap first
+		registerReceivers()
+	}
 
 	override fun onHandleIntent(intent: Intent?) {
 		Log.e(tag, "REMOVE ME: Intent incoming had the following data: " + intent?.dataString)
+	}
+
+	private fun registerReceivers() {
+		if (taskMap.containsKey(EventType.WIFI_CONNECTED) || taskMap.containsKey(EventType.WIFI_DISCONNECTED)) {
+			applicationContext.registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+		}
 	}
 }

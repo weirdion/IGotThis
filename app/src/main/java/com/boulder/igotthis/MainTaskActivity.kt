@@ -17,11 +17,15 @@
 package com.boulder.igotthis
 
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import com.boulder.igotthis.util.ConnectivityReceiver
 import com.boulder.igotthis.views.TaskCreation
 import kotlinx.android.synthetic.main.activity_main_task.bottom_navigation_view
 import kotlinx.android.synthetic.main.activity_main_task.main_content
@@ -74,5 +78,7 @@ class MainTaskActivity : AppCompatActivity() {
 		bottom_navigation_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 		taskCreationObj = TaskCreation(context, main_content)
 		bottom_navigation_view.selectedItemId = R.id.task_creation_menu
+		//	TODO: This is a PoC and should be removed once service gets going
+		context.registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 	}
 }

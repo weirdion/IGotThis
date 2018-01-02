@@ -19,20 +19,31 @@ package com.boulder.igotthis.util
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.boulder.igotthis.IGotThisService
+import android.util.Log
 
 /**
- * BootReceiver to listen for BOOT_COMPLETED intent and start the service
- *
  * @author asadana
  * @since 12/31/17
  */
-class BootReceiver : BroadcastReceiver() {
+class ConnectivityReceiver : BroadcastReceiver() {
+	private val tag: String = this.javaClass.name
 	override fun onReceive(context: Context?, intent: Intent?) {
-		if (context != null) {
-			val serviceIntent = Intent(context, IGotThisService::class.java)
-			//		context?.startService(serviceIntent)
-			//      TODO keep commented out till app is ready for regular use
+		if (context != null && intent != null) {
+			Log.d(tag, "action: " + intent.action)
+			val extras = intent.extras
+			if (extras != null) {
+				for (key in extras.keySet()) {
+					Log.d(tag, "key [" + key + "]: " +
+							extras.get(key))
+				}
+			}
+			else {
+				Log.d(tag, "no extras")
+			}
+		}
+		else {
+			Log.w(tag, "Context or Intent was null")
 		}
 	}
+
 }
