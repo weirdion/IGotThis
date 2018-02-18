@@ -16,6 +16,8 @@
 
 package com.boulder.igotthis.base
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.boulder.igotthis.R
 
 /**
@@ -24,7 +26,7 @@ import com.boulder.igotthis.R
  * @author asadana
  * @since 12/24/17
  */
-enum class ActionType {
+enum class ActionType : Parcelable {
 	NONE,
 	TURN_BLUETOOTH_ON,
 	TURN_BLUETOOTH_OFF,
@@ -36,7 +38,27 @@ enum class ActionType {
 	SEND_MESSAGE_USING_TELEGRAM,
 	PERFORM_CUSTOM_ACTION;
 
-	companion object {
+	constructor()
+	constructor(parcel: Parcel) : this() {
+		ActionType.values()[parcel.readInt()]
+	}
+
+	override fun writeToParcel(parcel: Parcel, flags: Int) {
+		parcel.writeInt(this.ordinal)
+	}
+
+	override fun describeContents(): Int {
+		return 0
+	}
+
+	companion object CREATOR : Parcelable.Creator<ActionType> {
+		override fun createFromParcel(parcel: Parcel): ActionType {
+			return ActionType.values()[parcel.readInt()]
+		}
+
+		override fun newArray(size: Int): Array<ActionType?> {
+			return arrayOfNulls(size)
+		}
 
 		/**
 		 * Method to fetch the String resource for the corresponding enum.

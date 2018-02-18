@@ -16,6 +16,8 @@
 
 package com.boulder.igotthis.util
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.support.annotation.NonNull
 import com.boulder.igotthis.base.ActionType
 import com.boulder.igotthis.base.EventType
@@ -27,12 +29,37 @@ import com.boulder.igotthis.base.EventType
  * @author asadana
  * @since 12/24/17
  */
-class Task(@NonNull eventType: EventType, @NonNull actionType: ActionType) {
+class Task(@NonNull eventType: EventType, @NonNull actionTypeList: List<ActionType>) : Parcelable {
 	var eventType = EventType.NONE
-	var actionType = ActionType.NONE // TODO this should be a list
+	var actionTypeList: MutableList<ActionType>
 
 	init {
 		this.eventType = eventType
-		this.actionType = actionType
+		this.actionTypeList = actionTypeList.toMutableList()
+	}
+
+	constructor(parcel: Parcel) : this(
+			EventType.values()[parcel.readInt()],
+			mutableListOf<ActionType>().apply {
+				parcel.readTypedList(this, ActionType.CREATOR)
+			})
+
+	companion object CREATOR : Parcelable.Creator<Task> {
+		override fun createFromParcel(parcel: Parcel): Task {
+			return Task(parcel)
+		}
+
+		override fun newArray(size: Int): Array<Task?> {
+			return arrayOfNulls(size)
+		}
+	}
+
+	override fun writeToParcel(dest: Parcel?, flags: Int) {
+		dest?.writeInt(eventType.ordinal)
+		dest?.writeTypedList(actionTypeList)
+	}
+
+	override fun describeContents(): Int {
+		return 0
 	}
 }
