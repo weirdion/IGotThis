@@ -19,6 +19,7 @@ package com.boulder.igotthis.util
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.boulder.igotthis.IGotThisService
 
 /**
@@ -28,9 +29,12 @@ import com.boulder.igotthis.IGotThisService
  * @since 12/31/17
  */
 class BootReceiver : BroadcastReceiver() {
+	private val tag: String = this.javaClass.name
+
 	override fun onReceive(context: Context?, intent: Intent?) {
+		Log.d(tag, "Boot Completed received.")
 		if (context != null) {
-			val serviceIntent = Intent(context, IGotThisService::class.java)
+			// val serviceIntent = Intent(context, IGotThisService::class.java)
 			//		context?.startService(serviceIntent)
 			//      TODO keep commented out till app is ready for regular use
 		}
