@@ -32,6 +32,7 @@ import com.boulder.igotthis.util.Task
 import com.boulder.igotthis.views.TaskCreation
 import kotlinx.android.synthetic.main.activity_main_task.bottom_navigation_view
 import kotlinx.android.synthetic.main.activity_main_task.main_content
+import java.util.Collections
 
 /**
  * MainTaskActivity
@@ -85,7 +86,9 @@ class MainTaskActivity : AppCompatActivity() {
 		// TODO: PoC: Delete later
 		val taskTemp = Task(EventType.WIFI_DISCONNECTED, mutableListOf(ActionType.TURN_BLUETOOTH_ON))
 		val intent = Intent(context, IGotThisService::class.java)
+		intent.putExtra(Constants.clearTaskListKey, true)
 		intent.putExtra(Constants.taskIntentKey, taskTemp)
+		Log.e(tag, "Starting service : intent " + intent.extras)
 		context.startService(intent)
 	}
 }

@@ -22,8 +22,10 @@ package com.boulder.igotthis.util
  */
 class Constants {
 	companion object {
-		val taskIntentKey = "taskKey"
-		val taskListIntentKey = "taskListKey"
-		val clearTaskListKey = "clearTaskListKey"
+		const val taskIntentKey = "taskKey"
+		const val clearTaskListKey = "clearTaskListKey"
+		const val networkInfoKey = "networkInfo"
+		const val networkTypeKey = "networkType"
+		const val extraInfoKey = "extraInfo"
 	}
 }

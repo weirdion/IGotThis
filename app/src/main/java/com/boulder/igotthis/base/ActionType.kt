@@ -66,7 +66,7 @@ enum class ActionType : Parcelable {
 		 * @param actionType Contains the enum value for the resource.
 		 * @return the resource for the string.
 		 */
-		fun getStringResource(actionType: ActionType?): Int {
+		@JvmStatic fun getStringResource(actionType: ActionType?): Int {
 			return when (actionType) {
 				TURN_BLUETOOTH_ON           -> R.string.action_type_bluetooth_turn_on
 				TURN_BLUETOOTH_OFF          -> R.string.action_type_bluetooth_turn_off
@@ -86,7 +86,7 @@ enum class ActionType : Parcelable {
 		 * @param position Contains the position chosen from the list of enums.
 		 * @return the corresponding enum.
 		 */
-		fun valueAt(position: Int?): ActionType {
+		@JvmStatic fun valueAt(position: Int?): ActionType {
 			if (position != null) {
 				if (position < ActionType.values().size) {
 					return ActionType.values()[position]
@@ -101,7 +101,7 @@ enum class ActionType : Parcelable {
 		 * @param actionType Contains the ActionType enum object being queried.
 		 * @return the corresponding position, -1 if not found.
 		 */
-		fun getPositionOf(actionType: ActionType?): Int {
+		@JvmStatic fun getPositionOf(actionType: ActionType?): Int {
 			if (actionType != null) {
 				for (position in 0 until EventType.values().size) {
 					if (actionType == valueAt(position))
