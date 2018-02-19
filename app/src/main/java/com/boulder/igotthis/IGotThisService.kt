@@ -16,16 +16,18 @@
 
 package com.boulder.igotthis
 
-import android.app.IntentService
+import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import com.boulder.igotthis.base.EventType
+import com.boulder.igotthis.base.IGotThisBinder
 import com.boulder.igotthis.util.Constants
 import com.boulder.igotthis.util.Task
 
@@ -33,7 +35,7 @@ import com.boulder.igotthis.util.Task
  * @author asadana
  * @since 12/31/17
  */
-class IGotThisService(name: String?) : IntentService(name) {
+class IGotThisService : Service() {
 
 	private val tag: String = this.javaClass.name
 	private lateinit var taskList: MutableList<Task>
@@ -53,9 +55,6 @@ class IGotThisService(name: String?) : IntentService(name) {
 							onNetworkChange(extras.get(Constants.networkInfoKey) as NetworkInfo)
 						}
 					}
-					if (intent.hasExtra(Constants.networkInfoKey)) {
-
-					}
 				}
 				else {
 					Log.d(tag, "no extras")
@@ -67,35 +66,46 @@ class IGotThisService(name: String?) : IntentService(name) {
 		}
 	}
 
-	constructor() : this("IGotThisService")
+	private val iGotThisBinder = object : IGotThisBinder() {
+		override fun addTask(taskObj: Task) {
+			taskList.add(taskObj)
+			updateRegisteredReceivers()
+		}
+
+		override fun addTaskList(incomingTaskList: List<Task>) {
+			incomingTaskList.forEach { incomingTaskListIterator ->
+				taskList.add(incomingTaskListIterator)
+				updateRegisteredReceivers()
+			}
+		}
+
+		override fun clearTaskList(): Boolean {
+			taskList.clear()
+			unregisterAllReceivers()
+			if (taskList.isEmpty())
+				return true
+			return false
+		}
+
+	}
 
 	override fun onCreate() {
 		super.onCreate()
 		taskList = mutableListOf()
 	}
 
-	override fun onHandleIntent(intent: Intent?) {
-		Log.d(tag, "Intent received " + intent)
-		if (intent != null && intent.extras != null) {
-			if (intent.hasExtra(Constants.clearTaskListKey)) {
-				Log.d(tag, "Intent had key " + Constants.clearTaskListKey)
-				taskList.clear()
-				unregisterAllReceivers()
-			}
-			if (intent.hasExtra(Constants.taskIntentKey)) {
-				Log.d(tag, "Intent had key " + Constants.taskIntentKey)
-				taskList.add(intent.getParcelableExtra(Constants.taskIntentKey))
-				registerReceivers()
-			}
-		}
+	override fun onBind(intent: Intent?): IBinder {
+		Log.d(tag, "onBind() + " + intent?.action)
+		return iGotThisBinder
 	}
 
 	override fun onDestroy() {
-		super.onDestroy()
+		Log.d(tag, "onDestroy")
 		unregisterAllReceivers()
+		super.onDestroy()
 	}
 
-	private fun registerReceivers() {
+	private fun updateRegisteredReceivers() {
 		// TODO fix this when multiple cases are handled. Maybe have a boolean flag to keep track of receivers.
 		taskList
 				.asSequence()
@@ -108,6 +118,7 @@ class IGotThisService(name: String?) : IntentService(name) {
 	}
 
 	private fun unregisterAllReceivers() {
+		Log.d(tag, "Unregistering all receivers")
 		if (isReceiverRegistered) {
 			applicationContext.unregisterReceiver(connectivityReceiver)
 		}

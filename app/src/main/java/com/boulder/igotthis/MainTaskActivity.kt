@@ -85,10 +85,9 @@ class MainTaskActivity : AppCompatActivity() {
 
 		// TODO: PoC: Delete later
 		val taskTemp = Task(EventType.WIFI_DISCONNECTED, mutableListOf(ActionType.TURN_BLUETOOTH_ON))
-		val intent = Intent(context, IGotThisService::class.java)
-		intent.putExtra(Constants.clearTaskListKey, true)
-		intent.putExtra(Constants.taskIntentKey, taskTemp)
-		Log.e(tag, "Starting service : intent " + intent.extras)
-		context.startService(intent)
+//		val intent = Intent(context, IGotThisService::class.java)
+//		intent.putExtra(Constants.clearTaskListKey, true)
+//		intent.putExtra(Constants.taskIntentKey, taskTemp)
+//		context.startService(intent)
 	}
 }

@@ -17,6 +17,7 @@
 package com.boulder.igotthis.base
 
 import android.os.Binder
+import android.support.annotation.NonNull
 import com.boulder.igotthis.util.Task
 
 /**
@@ -29,14 +30,14 @@ import com.boulder.igotthis.util.Task
 abstract class IGotThisBinder : Binder() {
 	/**
 	 * Function to add a single {@link com.boulder.igotthis.util.Task} object.
-	 * @param taskObj   Contains the Task created by the user to be added to the taskList.
+	 * @param taskObj   Contains the Task created by the user to be added to the TaskList.
 	 */
-	abstract fun addTask(taskObj: Task)
+	abstract fun addTask(@NonNull taskObj: Task)
 	/**
 	 * Function to add a list of {@link com.boulder.igotthis.util.Task} objects.
-	 * @param taskList  Contains a list of Tasks created by the user to be added to the taskList.
+	 * @param incomingTaskList  Contains a list of Tasks created by the user to be added to the TaskList.
 	 */
-	abstract fun addTaskList(taskList: List<Task>)
+	abstract fun addTaskList(@NonNull incomingTaskList: List<Task>)
 	/**
 	 * Function to allow the user to clear the existing taskList in the service.
 	 * @return Returns a Boolean flag as sign if the list was successfully cleared.
