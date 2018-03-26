@@ -27,11 +27,15 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import com.boulder.igotthis.base.EventType
-import com.boulder.igotthis.base.IGotThisBinder
+import com.boulder.igotthis.base.IGotThisListenerInterface
+import com.boulder.igotthis.base.IGotThisServiceBinder
 import com.boulder.igotthis.util.Constants
 import com.boulder.igotthis.util.Task
 
 /**
+ * IGotThisService is a class that handles the background service operations for the IGotThis app.
+ * This class extends [Service].
+ *
  * @author asadana
  * @since 12/31/17
  */
@@ -39,6 +43,7 @@ class IGotThisService : Service() {
 
 	private val tag: String = this.javaClass.name
 	private lateinit var taskList: MutableList<Task>
+	private lateinit var registeredListener: IGotThisListenerInterface
 	private var isReceiverRegistered = false
 
 	private val connectivityReceiver = object : BroadcastReceiver() {
@@ -66,7 +71,7 @@ class IGotThisService : Service() {
 		}
 	}
 
-	private val iGotThisBinder = object : IGotThisBinder() {
+	private val iGotThisServiceBinder = object : IGotThisServiceBinder() {
 		override fun addTask(taskObj: Task) {
 			taskList.add(taskObj)
 			updateRegisteredReceivers()
@@ -87,6 +92,13 @@ class IGotThisService : Service() {
 			return false
 		}
 
+		override fun register(iGotThisListener: IGotThisListenerInterface, className: String) {
+			TODO("not implemented")
+		}
+
+		override fun unregister(className: String) {
+			TODO("not implemented")
+		}
 	}
 
 	override fun onCreate() {
@@ -94,9 +106,13 @@ class IGotThisService : Service() {
 		taskList = mutableListOf()
 	}
 
+	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+		return Service.START_NOT_STICKY
+	}
+
 	override fun onBind(intent: Intent?): IBinder {
 		Log.d(tag, "onBind() + " + intent?.action)
-		return iGotThisBinder
+		return iGotThisServiceBinder
 	}
 
 	override fun onDestroy() {

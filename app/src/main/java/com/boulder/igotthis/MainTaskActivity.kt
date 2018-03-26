@@ -16,11 +16,14 @@
 
 package com.boulder.igotthis
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.IBinder
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -41,7 +44,7 @@ import java.util.Collections
  * @author asadana
  * @since 12/24/17
  */
-class MainTaskActivity : AppCompatActivity() {
+class MainTaskActivity : AppCompatActivity(), ServiceConnection {
 	private val tag: String = this.javaClass.name
 
 	private lateinit var context: Context
@@ -89,5 +92,26 @@ class MainTaskActivity : AppCompatActivity() {
 //		intent.putExtra(Constants.clearTaskListKey, true)
 //		intent.putExtra(Constants.taskIntentKey, taskTemp)
 //		context.startService(intent)
+	}
+
+	override fun onPostResume() {
+		super.onPostResume()
+		Log.d(tag, "onPostResume")
+		Log.d(tag, "Binding IGotThisService")
+		applicationContext.bindService(Intent(Constants.iGotThisServiceBinder), this, Context.BIND_AUTO_CREATE)
+	}
+
+	override fun onPause() {
+		super.onPause()
+		Log.d(tag, "onPause")
+		applicationContext.unbindService(this)
+	}
+
+	override fun onServiceConnected(component: ComponentName?, binder: IBinder?) {
+		TODO("not implemented")
+	}
+
+	override fun onServiceDisconnected(component: ComponentName?) {
+		TODO("not implemented")
 	}
 }

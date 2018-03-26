@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Ankit Sadana
+ * Copyright (C) 2018 Ankit Sadana
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,20 +21,20 @@ import android.support.annotation.NonNull
 import com.boulder.igotthis.util.Task
 
 /**
- * Interface class the extends {@link android.os.Binder} to provide methods to the Activity.
+ * Interface class the extends [android.os.Binder] to provide methods to the Activity.
  * This methods can be used to clear or update the Task list in the service.
  *
  * @author asadana
  * @since 2/18/18
  */
-abstract class IGotThisBinder : Binder() {
+abstract class IGotThisServiceBinder : Binder() {
 	/**
-	 * Function to add a single {@link com.boulder.igotthis.util.Task} object.
+	 * Function to add a single [com.boulder.igotthis.util.Task] object.
 	 * @param taskObj   Contains the Task created by the user to be added to the TaskList.
 	 */
 	abstract fun addTask(@NonNull taskObj: Task)
 	/**
-	 * Function to add a list of {@link com.boulder.igotthis.util.Task} objects.
+	 * Function to add a list of [com.boulder.igotthis.util.Task] objects.
 	 * @param incomingTaskList  Contains a list of Tasks created by the user to be added to the TaskList.
 	 */
 	abstract fun addTaskList(@NonNull incomingTaskList: List<Task>)
@@ -43,4 +43,17 @@ abstract class IGotThisBinder : Binder() {
 	 * @return Returns a Boolean flag as sign if the list was successfully cleared.
 	 */
 	abstract fun clearTaskList(): Boolean
+	/**
+	 * Function to allow listener extending [IGotThisListenerInterface] interface to register
+	 * to be notified for different events or callbacks.
+	 * @param iGotThisListener  Contains the client that is trying to register to the service.
+	 * @param className         Contains the client name so it can be identified.
+	 */
+	abstract fun register(@NonNull iGotThisListener: IGotThisListenerInterface, @NonNull className: String)
+	/**
+	 * Function to allow listener extending [IGotThisListenerInterface] interface to unregister
+	 * so they no longer get notifications or callbacks for events.
+	 * @param className  Contains the client name that is trying to unregister from the service.
+	 */
+	abstract fun unregister(@NonNull className: String)
 }

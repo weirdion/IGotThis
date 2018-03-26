@@ -22,10 +22,13 @@ package com.boulder.igotthis.util
  */
 class Constants {
 	companion object {
+		// Intent key constants
 		const val taskIntentKey = "taskKey"
 		const val clearTaskListKey = "clearTaskListKey"
 		const val networkInfoKey = "networkInfo"
 		const val networkTypeKey = "networkType"
 		const val extraInfoKey = "extraInfo"
+		// Service communication constants
+		const val iGotThisServiceBinder = "com.boulder.igotthis.base.IGotThisServiceBinder"
 	}
 }
