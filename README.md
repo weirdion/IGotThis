@@ -1,5 +1,5 @@
-# IGotThis
-A tasking android application
+# IGotThis [![Build Status](https://travis-ci.org/asadana/IGotThis.svg?branch=develop)](https://travis-ci.org/asadana/IGotThis)
+A tasking android application written in Kotlin
 
 
 License
