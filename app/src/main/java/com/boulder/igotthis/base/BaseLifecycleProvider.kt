@@ -16,6 +16,9 @@
 
 package com.boulder.igotthis.base
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
 import android.support.annotation.NonNull
 import android.view.ViewGroup
@@ -26,5 +29,13 @@ import android.view.ViewGroup
  * @author asadana
  * @since 12/24/17
  */
-abstract class BaseLifecycleProvider(protected @NonNull var context: Context,
-                                     protected @NonNull var viewGroupContainer: ViewGroup) : ILifecycleProvider
+abstract class BaseLifecycleProvider(@NonNull protected var context: Context,
+                                     @NonNull protected var viewGroupContainer: ViewGroup) :
+		ILifecycleProvider, LifecycleObserver {
+
+	@OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+	abstract override fun onResume()
+
+	@OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+	abstract override fun onPause()
+}
