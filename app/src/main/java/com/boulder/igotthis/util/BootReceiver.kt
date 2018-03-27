@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.boulder.igotthis.IGotThisService
 
 /**
  * BootReceiver to listen for BOOT_COMPLETED intent and start the service

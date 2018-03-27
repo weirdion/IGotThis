@@ -33,16 +33,19 @@ abstract class IGotThisServiceBinder : Binder() {
 	 * @param taskObj   Contains the Task created by the user to be added to the TaskList.
 	 */
 	abstract fun addTask(@NonNull taskObj: Task)
+
 	/**
 	 * Function to add a list of [com.boulder.igotthis.util.Task] objects.
 	 * @param incomingTaskList  Contains a list of Tasks created by the user to be added to the TaskList.
 	 */
 	abstract fun addTaskList(@NonNull incomingTaskList: List<Task>)
+
 	/**
 	 * Function to allow the user to clear the existing taskList in the service.
 	 * @return Returns a Boolean flag as sign if the list was successfully cleared.
 	 */
 	abstract fun clearTaskList(): Boolean
+
 	/**
 	 * Function to allow listener extending [IGotThisListenerInterface] interface to register
 	 * to be notified for different events or callbacks.
@@ -50,6 +53,7 @@ abstract class IGotThisServiceBinder : Binder() {
 	 * @param className         Contains the client name so it can be identified.
 	 */
 	abstract fun register(@NonNull iGotThisListener: IGotThisListenerInterface, @NonNull className: String)
+
 	/**
 	 * Function to allow listener extending [IGotThisListenerInterface] interface to unregister
 	 * so they no longer get notifications or callbacks for events.

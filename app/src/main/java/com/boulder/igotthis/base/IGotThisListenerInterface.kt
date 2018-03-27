@@ -31,6 +31,7 @@ public interface IGotThisListenerInterface {
 	 * @return Returns the entire list of [Task]
 	 */
 	fun deliverAllTasks(): List<Task>
+
 	/**
 	 * Function to deliver only the tasks that the user has enabled.
 	 * @return Returns a list of [Task]
