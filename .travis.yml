@@ -27,9 +27,12 @@ android:
     - build-tools-${ANDROID_BUILD_TOOLS_VERSION}
     - extra
 
-# Shouldn't be needed gradlew has been commited as 755
+# Shouldn't be needed gradlew has been committed as 755
 # before_install:
 #           - chmod +x gradlew
+
+script:
+  - ls -alFH
 
 jobs:
   include:
