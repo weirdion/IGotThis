@@ -27,18 +27,14 @@ android:
     - build-tools-${ANDROID_BUILD_TOOLS_VERSION}
     - extra
 
-# Shouldn't be needed gradlew has been committed as 755
-# before_install:
-#           - chmod +x gradlew
-
-script:
-  - ls -alFH
-
 jobs:
   include:
     - stage: build
+      script: ./build
     - stage: test
+      script: ./test
     - stage: androidTest
+      script: ./androidTest
 
 stages:
   - build
