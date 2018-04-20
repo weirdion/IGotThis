@@ -42,8 +42,8 @@ import com.boulder.igotthis.util.Task
 class IGotThisService : Service() {
 
 	private val tag: String = this.javaClass.name
+	private val registeredListenerMap: MutableMap<String, IGotThisListenerInterface> = mutableMapOf()
 	private lateinit var taskList: MutableList<Task>
-	private lateinit var registeredListener: IGotThisListenerInterface
 	private var isReceiverRegistered = false
 
 	private val connectivityReceiver = object : BroadcastReceiver() {
@@ -93,11 +93,13 @@ class IGotThisService : Service() {
 		}
 
 		override fun register(iGotThisListener: IGotThisListenerInterface, className: String) {
-			TODO("not implemented")
+			registeredListenerMap.clear() // Clearing all registeredListeners so only one is allowed registered
+			registeredListenerMap[className] = iGotThisListener
 		}
 
 		override fun unregister(className: String) {
-			TODO("not implemented")
+			if (registeredListenerMap.remove(className) == null)
+				Log.w(tag, "$className was not registered.")
 		}
 	}
 
@@ -107,6 +109,7 @@ class IGotThisService : Service() {
 	}
 
 	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+		// TODO This should be STICKY then programmatically stopSelf if user chooses to
 		return Service.START_NOT_STICKY
 	}
 
@@ -141,7 +144,7 @@ class IGotThisService : Service() {
 	}
 
 	private fun onNetworkChange(networkInfo: NetworkInfo) {
-		Log.d(tag, "onNetworkChange: NetworkInfo: " + networkInfo)
+		Log.d(tag, "onNetworkChange: NetworkInfo: $networkInfo")
 		when {
 			ConnectivityManager.TYPE_WIFI == networkInfo.type   -> {
 				taskList

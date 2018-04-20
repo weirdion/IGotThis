@@ -19,9 +19,7 @@ package com.boulder.igotthis
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.IBinder
 import android.support.design.widget.BottomNavigationView
@@ -30,12 +28,13 @@ import android.util.Log
 import android.widget.Toast
 import com.boulder.igotthis.base.ActionType
 import com.boulder.igotthis.base.EventType
+import com.boulder.igotthis.base.IGotThisListenerInterface
+import com.boulder.igotthis.base.IGotThisServiceBinder
 import com.boulder.igotthis.util.Constants
 import com.boulder.igotthis.util.Task
 import com.boulder.igotthis.views.TaskCreation
 import kotlinx.android.synthetic.main.activity_main_task.bottom_navigation_view
 import kotlinx.android.synthetic.main.activity_main_task.main_content
-import java.util.Collections
 
 /**
  * MainTaskActivity
@@ -46,9 +45,12 @@ import java.util.Collections
  */
 class MainTaskActivity : AppCompatActivity(), ServiceConnection {
 	private val tag: String = this.javaClass.name
+	private val identifierString: String = MainTaskActivity::javaClass.name + System.identityHashCode(this)
 
 	private lateinit var context: Context
 	private lateinit var taskCreationObj: TaskCreation
+	private lateinit var iGotThisServiceBinder: IGotThisServiceBinder
+	private lateinit var iGotThisListenerInterface: IGotThisListenerInterface
 
 	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 		when (item.itemId) {
@@ -68,7 +70,7 @@ class MainTaskActivity : AppCompatActivity(), ServiceConnection {
 				return@OnNavigationItemSelectedListener true
 			}
 			else                    -> {
-				Log.w(tag, "Unknown option selection in bottom navigation drawer: " + item)
+				Log.w(tag, "Unknown option selection in bottom navigation drawer: $item")
 				return@OnNavigationItemSelectedListener false
 			}
 		}
@@ -88,10 +90,10 @@ class MainTaskActivity : AppCompatActivity(), ServiceConnection {
 
 		// TODO: PoC: Delete later
 		val taskTemp = Task(EventType.WIFI_DISCONNECTED, mutableListOf(ActionType.TURN_BLUETOOTH_ON))
-//		val intent = Intent(context, IGotThisService::class.java)
-//		intent.putExtra(Constants.clearTaskListKey, true)
-//		intent.putExtra(Constants.taskIntentKey, taskTemp)
-//		context.startService(intent)
+		//		val intent = Intent(context, IGotThisService::class.java)
+		//		intent.putExtra(Constants.clearTaskListKey, true)
+		//		intent.putExtra(Constants.taskIntentKey, taskTemp)
+		//		context.startService(intent)
 	}
 
 	override fun onPostResume() {
@@ -108,10 +110,13 @@ class MainTaskActivity : AppCompatActivity(), ServiceConnection {
 	}
 
 	override fun onServiceConnected(component: ComponentName?, binder: IBinder?) {
-		TODO("not implemented")
+		Log.d(tag, "IGotThisService bound successfully.")
+		iGotThisServiceBinder = binder as IGotThisServiceBinder
+		iGotThisServiceBinder.register(iGotThisListenerInterface, identifierString)
 	}
 
 	override fun onServiceDisconnected(component: ComponentName?) {
-		TODO("not implemented")
+		Log.d(tag, "IGotThisService disconnected.")
+		// TODO should we try to reconnect?
 	}
 }
